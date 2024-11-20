@@ -1,37 +1,54 @@
+{% set name = "setproctitle" %}
 {% set version = "1.2.2" %}
 
 package:
-  name: setproctitle
+  name: {{ name }}
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/s/setproctitle/setproctitle-{{ version }}.tar.gz
+  url: https://pypi.io/packages/source/s/{{ name }}/{{ name }}-{{ version }}.tar.gz
   sha256: 7dfb472c8852403d34007e01d6e3c68c57eb66433fb8a5c77b13b89a160d97df
 
 build:
-  number: 0
-  script: {{ PYTHON }} -m pip install . --no-deps -vv
+  number: 1
+  script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
 
 requirements:
   build:
-    - python                                 # [build_platform != target_platform]
     - {{ compiler('c') }}
   host:
     - python
     - pip
+    - setuptools
+    - wheel
   run:
     - python
 
 test:
   imports:
     - setproctitle
+  requires:
+    - pip
+  commands:
+    - pip check
 
 about:
-  home: http://code.google.com/p/py-setproctitle/
-  license: BSD 3-clause
+  home: https://github.com/dvarrazzo/py-setproctitle
+  license: BSD-3-Clause
   license_file: COPYRIGHT
   license_family: BSD
-  summary: 'A library to allow customization of the process title.'
+  summary: A library to allow customization of the process title.
+  description: |
+    The setproctitle module allows a process to change its title
+    (as displayed by system tools such as ps, top or MacOS Activity 
+    Monitor).
+    
+    Changing the title is mostly useful in multi-process systems, for
+    example when a master process is forked: changing the children's
+    title allows to identify the task each process is busy with. The
+    technique is used by PostgreSQL and the OpenSSH Server for example.
+  dev_url: https://github.com/dvarrazzo/py-setproctitle
+  doc_url: https://github.com/dvarrazzo/py-setproctitle
 
 extra:
   recipe-maintainers:
