@@ -42,8 +42,8 @@ test:
 about:
   home: https://github.com/dvarrazzo/py-setproctitle
   license: BSD-3-Clause
-  license_file: COPYRIGHT
   license_family: BSD
+  license_file: COPYRIGHT
   summary: A library to allow customization of the process title.
   description: |
     The setproctitle module allows a process to change its title
