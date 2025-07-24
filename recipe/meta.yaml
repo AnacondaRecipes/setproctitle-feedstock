@@ -29,9 +29,11 @@ test:
   imports:
     - setproctitle
   requires:
+    - python
     - pip
   commands:
     - pip check
+    - python -c "from importlib.metadata import version; assert(version('{{ name }}')=='{{ version }}')"
 
 about:
   home: https://github.com/dvarrazzo/py-setproctitle
