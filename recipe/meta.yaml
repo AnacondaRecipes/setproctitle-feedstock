@@ -26,14 +26,18 @@ requirements:
     - python
 
 test:
+  source_files:
+    - tests
   imports:
     - setproctitle
   requires:
     - python
     - pip
+    - pytest
   commands:
     - pip check
     - python -c "from importlib.metadata import version; assert(version('{{ name }}')=='{{ version }}')"
+    - pytest -vv tests
 
 about:
   home: https://github.com/dvarrazzo/py-setproctitle
