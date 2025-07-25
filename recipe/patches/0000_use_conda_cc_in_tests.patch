@@ -1,0 +1,14 @@
+diff --git a/tests/conftest.py b/tests/conftest.py
+index 6e15988..cce9443 100644
+--- a/tests/conftest.py
++++ b/tests/conftest.py
+@@ -55,7 +55,8 @@ def pyrun(pyconfig):
+     ):
+         return target
+ 
+-    cmdline = ["cc"]  # big punt
++    conda_cc = os.environ['CC'] # Use CC envvar for Conda toolchain
++    cmdline = [conda_cc]  # big punt
+     cmdline.extend(pyconfig("includes"))
+     cmdline.extend(["-o", target, source])
+     cmdline.extend(pyconfig("ldflags"))
