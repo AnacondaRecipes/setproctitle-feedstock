@@ -28,6 +28,19 @@ index f81a839..1a8bc3d 100644
      return ""
  
  
+diff --git a/setup.py b/setup.py
+index 8468f2c..27740a9 100644
+--- a/setup.py
++++ b/setup.py
+@@ -131,7 +131,4 @@ def do_build(with_extension):
+     )
+ 
+ 
+-try:
+-    do_build(with_extension=True)
+-except BuildError:
+-    do_build(with_extension=False)
++do_build(with_extension=True)
 diff --git a/tests/conftest.py b/tests/conftest.py
 index 6e15988..cce9443 100644
 --- a/tests/conftest.py
