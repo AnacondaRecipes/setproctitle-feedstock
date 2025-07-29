@@ -6,7 +6,7 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/s/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
   sha256: c9f32b96c700bb384f33f7cf07954bb609d35dd82752cef57fb2ee0968409169
   patches:
   # Few tests compile C code at runtime by invoking 'cc', make them use Conda toolchain instead.
