@@ -44,7 +44,7 @@ test:
   commands:
     - pip check
     - python -c "from importlib.metadata import version; assert(version('{{ name }}')=='{{ version }}')"
-    # Tests fail on CI for OSX platform. Pass locally.
+    # Tests fail on CI for OSX platform, passes locally. Also confirmed CI OSX package works locally with tests
     - pytest -vv tests  # [not osx]
 
 about:
