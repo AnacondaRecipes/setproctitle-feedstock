@@ -1,21 +1,26 @@
 {% set name = "setproctitle" %}
-{% set version = "1.2.2" %}
+{% set version = "1.3.6" %}
 
 package:
   name: {{ name }}
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/s/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 7dfb472c8852403d34007e01d6e3c68c57eb66433fb8a5c77b13b89a160d97df
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: c9f32b96c700bb384f33f7cf07954bb609d35dd82752cef57fb2ee0968409169
+  patches:
+  # Few tests compile C code at runtime by invoking 'cc', make them use Conda toolchain instead.
+    - patches/0000_use_conda_cc_in_tests.patch
 
 build:
-  number: 2
-  script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
+  skip: true  # [py<38]
+  number: 0
+  script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vvv
 
 requirements:
   build:
     - {{ compiler('c') }}
+    - {{ stdlib('c') }}
   host:
     - python
     - pip
@@ -25,18 +30,28 @@ requirements:
     - python
 
 test:
+  source_files:
+    - tests
   imports:
     - setproctitle
   requires:
+    - python
     - pip
+    - pytest
+    # Tests [test_embedded, test_embedded_many_args] compile C code at test runtime by invoking C compiler
+    - {{ compiler('c') }}
+    - {{ stdlib('c') }}
   commands:
     - pip check
+    - python -c "from importlib.metadata import version; assert(version('{{ name }}')=='{{ version }}')"
+    # Tests fail on CI for OSX platform, passes locally. Also confirmed CI OSX package works locally with tests
+    - pytest -vv tests  # [not osx]
 
 about:
   home: https://github.com/dvarrazzo/py-setproctitle
   license: BSD-3-Clause
-  license_file: COPYRIGHT
   license_family: BSD
+  license_file: COPYRIGHT
   summary: A library to allow customization of the process title.
   description: |
     The setproctitle module allows a process to change its title
