@@ -1,15 +1,15 @@
 {% set name = "setproctitle" %}
-{% set version = "1.3.6" %}
+{% set version = "1.3.7" %}
 
 package:
   name: {{ name }}
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: c9f32b96c700bb384f33f7cf07954bb609d35dd82752cef57fb2ee0968409169
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: bc2bc917691c1537d5b9bca1468437176809c7e11e5694ca79a9ca12345dcb9e
   patches:
-  # Few tests compile C code at runtime by invoking 'cc', make them use Conda toolchain instead.
+    # Few tests compile C code at runtime by invoking 'cc', make them use Conda toolchain instead.
     - patches/0000_use_conda_cc_in_tests.patch
 
 build:
@@ -55,9 +55,9 @@ about:
   summary: A library to allow customization of the process title.
   description: |
     The setproctitle module allows a process to change its title
-    (as displayed by system tools such as ps, top or MacOS Activity 
+    (as displayed by system tools such as ps, top or MacOS Activity
     Monitor).
-    
+
     Changing the title is mostly useful in multi-process systems, for
     example when a master process is forked: changing the children's
     title allows to identify the task each process is busy with. The
