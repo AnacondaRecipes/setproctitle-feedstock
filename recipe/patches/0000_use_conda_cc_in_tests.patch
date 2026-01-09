@@ -1,8 +1,8 @@
 diff --git a/tests/conftest.py b/tests/conftest.py
-index 6e15988..cce9443 100644
+index 6e15988..0456015 100644
 --- a/tests/conftest.py
 +++ b/tests/conftest.py
-@@ -55,7 +55,8 @@ def pyrun(pyconfig):
+@@ -55,10 +55,12 @@ def pyrun(pyconfig):
      ):
          return target
  
@@ -11,4 +11,9 @@ index 6e15988..cce9443 100644
 +    cmdline = [conda_cc]  # big punt
      cmdline.extend(pyconfig("includes"))
      cmdline.extend(["-o", target, source])
-     cmdline.extend(pyconfig("ldflags"))
+-    cmdline.extend(pyconfig("ldflags"))
++    ldflags = pyconfig("ldflags")
++    cmdline.extend([flag for flag in ldflags if flag != "-lcrypt"])
+     cmdline.append(f"-L{pyconfig('prefix')[0]}/lib")
+     sp.check_call(cmdline)
+     return target
